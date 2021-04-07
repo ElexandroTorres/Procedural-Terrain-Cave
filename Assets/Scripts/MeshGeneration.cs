@@ -10,17 +10,15 @@ public class MeshGeneration : MonoBehaviour
     private Vector3[] vertices;
     private int[] triangles;
 
-    public int xSize = 500;
-    public int zSize = 500;
+    public int xSize = 50;
+    public int zSize = 50;
 
     void Start()
     {
         mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
-        
+        GetComponent<MeshFilter>().mesh = mesh;    
         CreateShape();
         UpdateMesh();
-        
     }
 
     
@@ -46,7 +44,6 @@ public class MeshGeneration : MonoBehaviour
 
         for (int z = 0; z < zSize; z++)
         {
-
             for (int x = 0; x < xSize; x++)
             {
 
@@ -60,21 +57,9 @@ public class MeshGeneration : MonoBehaviour
 
                 index += 6;
                 currentVertex++;
-
-
-                /*
-                triangles = new int[6];
-                triangles[0] = 0;
-                triangles[1] = xSize + 1;
-                triangles[2] = 1;
-                triangles[3] = 1;
-                triangles[4] = xSize + 1;
-                triangles[5] = xSize + 2;    
-                */
             }
             currentVertex++;
         }
-
     }
 
     private void UpdateMesh()
@@ -87,17 +72,4 @@ public class MeshGeneration : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    void OnDrawGizmos()
-    {
-        if(vertices == null)
-            return;
-
-        
-        Gizmos.color = Color.black;
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            Gizmos.DrawSphere(vertices[i], 0.1f);
-        }
-
-    } 
 }
