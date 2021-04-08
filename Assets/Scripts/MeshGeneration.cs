@@ -16,6 +16,8 @@ public class MeshGeneration : MonoBehaviour
     public float xPosition;
     public float zPosition;
 
+    public float scaleN = 0.3f;
+
     void Start()
     {
         xPosition = this.transform.position.x;
@@ -26,9 +28,26 @@ public class MeshGeneration : MonoBehaviour
         UpdateMesh();
     }
 
-    float CalculatePerlin(float x, float z)
+    float CalculatePerlin(float x, float z, float scale, int octaves, float persistance)
     {
-        return Mathf.PerlinNoise(x * 0.3f, z * 0.3f) * 2f;
+        float amplitude  = 1;
+        float frenquency = 1;
+        float height = 0;
+        float perlin = 0;
+
+        for(int i = 0; i < octaves; i++)
+        {
+            float sampleX = x / scale * frenquency;
+            float sampleZ = z / scale * frenquency;
+
+            //return Mathf.PerlinNoise(x * 0.3f, z * 0.3f) * 2f;
+            perlin =  Mathf.PerlinNoise(sampleX, sampleZ);
+            height += perlin * amplitude;
+            amplitude *= persistance;
+        }
+        
+        return perlin;
+        
     }
 
     
@@ -41,7 +60,7 @@ public class MeshGeneration : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = CalculatePerlin(xPosition, zPosition);
+                float y = CalculatePerlin(xPosition, zPosition, scaleN, 4, 0.5f);
                 vertices[i] = new Vector3(x, y, z);
                 i++;
                 xPosition++;
