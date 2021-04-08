@@ -1,45 +1,32 @@
 ﻿using UnityEngine;
 
-public static class PerlinNoise : MonoBehaviour
+public class PerlinNoise
 {
-    public float[,] noiseMap;
-    public int width = 50;
-    public int height = 50;
-    public float scale = 0.5f;
-
-    public static PerlinNoise(int width, int height, float scale)
-    {
-        this.width = width;
-        this.height = height;
-        this.scale = scale;
-    }
+    private static float[,] noiseMap;
 
     public static float[,] GenerateNoiseMap(int width, int height, float scale)
     {
-        this.width = width;
-        this.height = height;
-        this.scale = scale;
 
-        this.noiseMap = new float[height, width];
-
+        noiseMap = new float[height, width];
+ 
         if(scale == 0)
         {
             scale = 0.00001f;
         }
 
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
             {
-                noiseMap[y, x] = GenerateNoise(x, y);
+                noiseMap[y, x] = GenerateNoise(x, y, scale);
             }
         }
 
-        //Renderer renderer = GetComponent<Renderer>();  
-        //renderer.sharedMaterial.mainTexture = GenerateTexture();
+        return noiseMap;
+
     }
 
-    private void GenerateNoise(int x, int y)
+    private static float GenerateNoise(int x, int y, float scale)
     {
         float xCoord = (float)x / scale;
         float yCoord = (float)y / scale;

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor (typeof(PerlinNoise))]
+[CustomEditor (typeof(NoiseTexture))]
 public class ShowPerlinNoise : Editor
 {
     public override void OnInspectorGUI()
-    {
-        PerlinNoise noiseMap = (PerlinNoise)target;
+    { 
+        NoiseTexture noiseTexture = (NoiseTexture)target;
 
         DrawDefaultInspector();
 
         if(GUILayout.Button("Generate noise"))
         {
-            noiseMap.GenerateNoiseMap();
+            noiseTexture.ShowTextureNoise();
         }
     }
 }

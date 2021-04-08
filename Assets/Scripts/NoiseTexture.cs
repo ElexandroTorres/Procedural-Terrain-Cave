@@ -6,9 +6,13 @@ using UnityEngine;
 public class NoiseTexture : MonoBehaviour
 {
     float[,] noiseMap;
-
+    public int width = 50;
+    public int height = 50;
+    public float scale = 0.5f;
     public void ShowTextureNoise()
     {
+        noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale);
+
         Renderer renderer = GetComponent<Renderer>();  
         renderer.sharedMaterial.mainTexture = GenerateTexture();
     }
@@ -33,9 +37,7 @@ public class NoiseTexture : MonoBehaviour
 
     Color CalculateColor(int x, int y)
     {
-        float xCoord = (float)x / scale;
-        float yCoord = (float)y / scale;
-        float sample = Mathf.PerlinNoise(xCoord, yCoord);
+        float sample = noiseMap[y, x];
 
         return new Color(sample, sample, sample);
     }

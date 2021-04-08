@@ -7,8 +7,7 @@ public class NoiseMap : MonoBehaviour
     float[,] noiseMap;
     public int width = 50;
     public int height = 50;
-
-    public int scale = 0.3f;
+    public float scale = 0.3f;
 
     void Start()
     {
