@@ -1,48 +1,50 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-public class PerlinNoise : MonoBehaviour
+public static class PerlinNoise : MonoBehaviour
 {
+    public float[,] noiseMap;
     public int width = 50;
     public int height = 50;
     public float scale = 0.5f;
 
-    public void GenerateNoiseMap()
+    public static PerlinNoise(int width, int height, float scale)
     {
+        this.width = width;
+        this.height = height;
+        this.scale = scale;
+    }
+
+    public static float[,] GenerateNoiseMap(int width, int height, float scale)
+    {
+        this.width = width;
+        this.height = height;
+        this.scale = scale;
+
+        this.noiseMap = new float[height, width];
+
         if(scale == 0)
         {
             scale = 0.00001f;
         }
 
-        Renderer renderer = GetComponent<Renderer>();  
-        renderer.sharedMaterial.mainTexture = GenerateTexture();
-    }
-   
-    Texture2D GenerateTexture()
-    {
-        Texture2D texture = new Texture2D(width, height);
-
-        for(int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++)
         {
-            for(int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
             {
-                Color color = CalculateColor(x, y);
-                texture.SetPixel(x, y, color);
+                noiseMap[y, x] = GenerateNoise(x, y);
             }
         }
 
-        texture.Apply();
-
-        return texture;
+        //Renderer renderer = GetComponent<Renderer>();  
+        //renderer.sharedMaterial.mainTexture = GenerateTexture();
     }
 
-    Color CalculateColor(int x, int y)
+    private void GenerateNoise(int x, int y)
     {
         float xCoord = (float)x / scale;
         float yCoord = (float)y / scale;
-        float sample = Mathf.PerlinNoise(xCoord, yCoord);
-
-        return new Color(sample, sample, sample);
+        return Mathf.PerlinNoise(xCoord, yCoord);
     }
+   
 
 }

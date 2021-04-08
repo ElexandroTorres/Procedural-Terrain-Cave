@@ -344,9 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 50
   height: 50
-  scale: 5
-  offSetX: 100
-  offSetY: 100
+  scale: 0.3
 --- !u!64 &781592273
 MeshCollider:
   m_ObjectHideFlags: 0
