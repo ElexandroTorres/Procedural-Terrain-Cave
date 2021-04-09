@@ -5,12 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class NoiseTexture : MonoBehaviour
 {
-    float[,] noiseMap;
-    public int width = 50;
-    public int height = 50;
-    public float scale = 0.5f;
-    public void ShowTextureNoise()
+    private float[,] noiseMap;
+    private int width;
+    private int height;
+    private float scale;
+
+    public void ShowTextureNoise(int width, int height, float scale)
     {
+        this.width = width;
+        this.height = height;
+        this.scale = scale;
+
         noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale);
 
         Renderer renderer = GetComponent<Renderer>();  
