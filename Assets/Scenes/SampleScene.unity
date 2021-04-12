@@ -205,11 +205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 500e9d60dc007b645b954181bfb0d1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapManager: {fileID: 1493563023}
   xSize: 50
   zSize: 50
   xPosition: 0
   zPosition: 0
-  scaleN: 0.3
+  scale: 0
 --- !u!33 &573172455
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -386,8 +387,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.5321825, y: 0.05474808, z: -0.034530375, w: -0.8441517}
-  m_LocalPosition: {x: -8.988123, y: -215.95967, z: 102.15182}
+  m_LocalRotation: {x: 0.2197569, y: 0.22820854, z: -0.052873015, w: 0.9470123}
+  m_LocalPosition: {x: 2.4563782, y: 8.6495075, z: -10.089075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -500,6 +501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 50
   height: 50
-  scale: 0.3
+  scale: 0.6
   octaves: 0
   persistence: 0

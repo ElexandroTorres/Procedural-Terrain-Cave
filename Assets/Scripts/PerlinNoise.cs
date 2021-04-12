@@ -9,11 +9,6 @@ public class PerlinNoise
 
         noiseMap = new float[height, width];
  
-        if(scale == 0)
-        {
-            scale = 0.00001f;
-        }
-
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -26,7 +21,7 @@ public class PerlinNoise
 
     }
 
-    private static float GenerateNoise(int x, int y, float scale)
+    public static float GenerateNoise(float x, float y, float scale)
     {
         float xCoord = (float)x / scale;
         float yCoord = (float)y / scale;

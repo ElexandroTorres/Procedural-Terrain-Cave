@@ -5,24 +5,30 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour
 {
-    Mesh mesh;
-    
+    private Mesh mesh;
+    public GameObject mapManager;
     private Vector3[] vertices;
     private int[] triangles;
 
-    public int xSize = 50;
-    public int zSize = 50;
+    public int xSize;
+    public int zSize;
 
     public float xPosition;
     public float zPosition;
 
-    public float scaleN = 0.3f;
+    public float scale;
 
     void Start()
     {
+        mesh = new Mesh();
+
+        xSize = mapManager.GetComponent<MapManager>().width;
+        zSize = mapManager.GetComponent<MapManager>().height;
+        scale = mapManager.GetComponent<MapManager>().scale;
+
         xPosition = this.transform.position.x;
         zPosition = this.transform.position.z;
-        mesh = new Mesh();
+        
         GetComponent<MeshFilter>().mesh = mesh;    
         CreateShape();
         UpdateMesh();
@@ -30,23 +36,21 @@ public class MeshGenerator : MonoBehaviour
 
     float CalculatePerlin(float x, float z, float scale, int octaves, float persistance)
     {
-        float amplitude  = 1;
-        float frenquency = 1;
-        float height = 0;
-        float perlin = 0;
+        //float amplitude  = 1;
+        //float frenquency = 1;
+        //float height = 0;
 
-        for(int i = 0; i < octaves; i++)
-        {
-            float sampleX = x / scale * frenquency;
-            float sampleZ = z / scale * frenquency;
+        //for(int i = 0; i < octaves; i++)
+        //{
+            float sampleX = x / scale;
+            float sampleZ = z / scale;
 
-            //return Mathf.PerlinNoise(x * 0.3f, z * 0.3f) * 2f;
-            perlin =  Mathf.PerlinNoise(sampleX, sampleZ);
-            height += perlin * amplitude;
-            amplitude *= persistance;
-        }
+            return Mathf.PerlinNoise(sampleX, sampleZ);
+            //perlin =  Mathf.PerlinNoise(sampleX, sampleZ);
+            //height += perlin * amplitude;
+            //amplitude *= persistance;
+        //}
         
-        return perlin;
         
     }
 
@@ -60,12 +64,16 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = CalculatePerlin(xPosition, zPosition, scaleN, 4, 0.5f);
+                float y = PerlinNoise.GenerateNoise(x, z, scale);
+
+                if(y < 0) { y = 0; }
+                else if(y > 1) { y = 1; }
+                    
                 vertices[i] = new Vector3(x, y, z);
                 i++;
-                xPosition++;
+                //xPosition++;
             }
-            zPosition++;
+            //zPosition++;
         }
 
         triangles = new int[xSize * xSize * 6];

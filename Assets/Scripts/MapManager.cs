@@ -6,7 +6,8 @@ public class MapManager : MonoBehaviour
 {
     public int width = 50;
     public int height = 50;
-    public float scale = 0.3f;
+    [Range(0.001f, 50.0f)]
+    public float scale;
     public int octaves;
     public float persistence;
 
