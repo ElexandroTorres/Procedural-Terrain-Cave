@@ -6,7 +6,7 @@ using UnityEngine;
 public class MeshGenerator : MonoBehaviour
 {
     private Mesh mesh;
-    public GameObject mapManager;
+    public MapConfigs mapConfigs;
     private Vector3[] vertices;
     private int[] triangles;
 
@@ -18,13 +18,20 @@ public class MeshGenerator : MonoBehaviour
 
     public float scale;
 
+    public int octaves;
+
+    public float persistance;
+
     void Start()
     {
         mesh = new Mesh();
+        
 
-        xSize = mapManager.GetComponent<MapManager>().width;
-        zSize = mapManager.GetComponent<MapManager>().height;
-        scale = mapManager.GetComponent<MapManager>().scale;
+        xSize = mapConfigs.width;
+        zSize = mapConfigs.height;
+        scale = mapConfigs.scale;
+        octaves = mapConfigs.octaves;
+        persistance = mapConfigs.persistance;
 
         xPosition = this.transform.position.x;
         zPosition = this.transform.position.z;
@@ -64,7 +71,7 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = PerlinNoise.GenerateNoise(x, z, scale);
+                float y = PerlinNoise.GenerateNoise(x, z, scale, octaves, persistance);
 
                 if(y < 0) { y = 0; }
                 else if(y > 1) { y = 1; }

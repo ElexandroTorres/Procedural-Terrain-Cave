@@ -5,18 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class NoiseTexture : MonoBehaviour
 {
+    public MapConfigs mapConfigs;
     private float[,] noiseMap;
-    private int width;
-    private int height;
-    private float scale;
+    public  int width;
+    public int height;
+    public float scale;
 
-    public void ShowTextureNoise(int width, int height, float scale)
+    public int octaves;
+    public float persistance;
+
+    void Start()
     {
-        this.width = width;
-        this.height = height;
-        this.scale = scale;
-
-        noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale);
+        this.width = mapConfigs.width;
+        this.height = mapConfigs.height;
+        this.scale = mapConfigs.scale;
+        this.octaves = mapConfigs.octaves;
+        this.persistance = mapConfigs.persistance;
 
         Renderer renderer = GetComponent<Renderer>();  
         renderer.sharedMaterial.mainTexture = GenerateTexture();
@@ -42,7 +46,7 @@ public class NoiseTexture : MonoBehaviour
 
     Color CalculateColor(int x, int y)
     {
-        float sample = noiseMap[y, x];
+        float sample = PerlinNoise.GenerateNoise(x, y, scale, octaves, persistance);
 
         return new Color(sample, sample, sample);
     }

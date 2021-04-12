@@ -4,19 +4,31 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    public int width = 50;
-    public int height = 50;
-    [Range(0.001f, 50.0f)]
-    public float scale;
-    public int octaves;
-    public float persistence;
-
+    public MapConfigs mapConfigs;
     private NoiseTexture noiseTexture;
 
+    private int width;
+    private int height;
+    private float scale;
+
+    private int octaves;
+    private float persistance;
+
+    void Start()
+    {
+        width = mapConfigs.width;
+        height = mapConfigs.height;
+        scale = mapConfigs.scale;
+        octaves = mapConfigs.octaves;
+        persistance = mapConfigs.persistance;
+    }
+
+    /*
     public void ShowTextureInfos()
     {
         noiseTexture = GetComponent<NoiseTexture>();
-        noiseTexture.ShowTextureNoise(width, height, scale);
+        noiseTexture.ShowTextureNoise(width, height, scale, octaves, persistance);
     }
+    */
 
 }

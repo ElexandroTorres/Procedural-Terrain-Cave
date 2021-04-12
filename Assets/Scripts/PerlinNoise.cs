@@ -4,7 +4,7 @@ public class PerlinNoise
 {
     private static float[,] noiseMap;
 
-    public static float[,] GenerateNoiseMap(int width, int height, float scale)
+    public static float[,] GenerateNoiseMap(int width, int height, float scale, int octaves, float persistance)
     {
 
         noiseMap = new float[height, width];
@@ -13,7 +13,7 @@ public class PerlinNoise
         {
             for (int y = 0; y < height; y++)
             {
-                noiseMap[y, x] = GenerateNoise(x, y, scale);
+                noiseMap[y, x] = GenerateNoise(x, y, scale, octaves, persistance);
             }
         }
 
@@ -21,11 +21,29 @@ public class PerlinNoise
 
     }
 
-    public static float GenerateNoise(float x, float y, float scale)
+    public static float GenerateNoise(int x, int y, float scale, int octaves, float persistance)
     {
-        float xCoord = (float)x / scale;
-        float yCoord = (float)y / scale;
-        return Mathf.PerlinNoise(xCoord, yCoord);
+        float total = 0;
+        float frequency = 1;
+        float amplitude = 1;
+        float maxValue = 0;
+
+        float xCoord = (float)x / scale * frequency;
+        float yCoord = (float)y / scale * frequency;
+
+        for(int i = 0; i < octaves; i++)
+        {
+            total += Mathf.PerlinNoise(xCoord, yCoord) * amplitude;
+
+            maxValue += amplitude;
+
+            amplitude *= persistance;
+            frequency *= 2;
+        }
+
+
+        return total / maxValue;
+        //return Mathf.PerlinNoise(xCoord, yCoord);
     }
    
 

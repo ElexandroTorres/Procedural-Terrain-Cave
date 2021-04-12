@@ -8,6 +8,9 @@ public class NoiseMap : MonoBehaviour
     public int width = 50;
     public int height = 50;
     public float scale = 0.3f;
+    public int octaves = 2;
+
+    public float persistance = 0.5f;
 
     void Start()
     {
@@ -16,6 +19,6 @@ public class NoiseMap : MonoBehaviour
 
     void FillNoiseMap()
     {
-        noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale);
+        noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale, octaves, persistance);
     }
 }
