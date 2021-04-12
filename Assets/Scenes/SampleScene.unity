@@ -216,6 +216,7 @@ MonoBehaviour:
   scale: 0
   octaves: 0
   persistance: 0
+  lacunarity: 0
 --- !u!23 &266096886
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -590,6 +591,7 @@ MonoBehaviour:
   scale: 0.3
   octaves: 0
   persistance: 0
+  lacunarity: 0
 --- !u!23 &1493563026
 MeshRenderer:
   m_ObjectHideFlags: 0

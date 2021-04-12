@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 50
   height: 50
-  scale: 15.5
-  octaves: 1
-  persistance: 0
+  scale: 24.7
+  octaves: 4
+  persistance: 0.3
+  lacunarity: 2

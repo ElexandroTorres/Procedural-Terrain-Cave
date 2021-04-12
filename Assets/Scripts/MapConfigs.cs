@@ -14,6 +14,7 @@ public class MapConfigs : ScriptableObject
     [Min(1)]
     public int octaves;
     public float persistance;
+    public float lacunarity;
     void Start()
     {
         

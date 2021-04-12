@@ -19,6 +19,6 @@ public class NoiseMap : MonoBehaviour
 
     void FillNoiseMap()
     {
-        noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale, octaves, persistance);
+        //noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale, octaves, persistance);
     }
 }
