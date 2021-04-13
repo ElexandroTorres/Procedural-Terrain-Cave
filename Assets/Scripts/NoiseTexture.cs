@@ -70,7 +70,15 @@ public class NoiseTexture : MonoBehaviour
         //float sample = PerlinNoise.GenerateNoise(x, y, scale, octaves, persistance);
         float sample = noiseMap[y, x];
 
-        return Color.Lerp(Color.black, Color.white, sample);
+        if(sample >= 0.5f)
+        {
+            return new Color(79, 42, 0);
+        }
+        else {
+            return new Color(79, 235, 191);
+        }
+
+        //return Color.Lerp(Color.black, Color.white, sample);
     }
     
 

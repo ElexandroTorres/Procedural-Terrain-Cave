@@ -10,6 +10,8 @@ public class MeshGenerator : MonoBehaviour
     private Vector3[] vertices;
     private int[] triangles;
 
+    private float[,] heightMap;
+
     public int xSize;
     public int zSize;
 
@@ -22,6 +24,8 @@ public class MeshGenerator : MonoBehaviour
 
     public float persistance;
 
+    public float lacunarity;
+
     void Start()
     {
         mesh = new Mesh();
@@ -32,6 +36,7 @@ public class MeshGenerator : MonoBehaviour
         scale = mapConfigs.scale;
         octaves = mapConfigs.octaves;
         persistance = mapConfigs.persistance;
+        this.lacunarity = mapConfigs.lacunarity;
 
         xPosition = this.transform.position.x;
         zPosition = this.transform.position.z;
@@ -66,17 +71,18 @@ public class MeshGenerator : MonoBehaviour
     {
         int i = 0;
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+        heightMap = PerlinNoise.GenerateNoiseMap(xSize + 1, zSize + 1, scale, octaves, persistance, lacunarity);
 
         for (int z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = PerlinNoise.GenerateNoise(x, z, scale, octaves, persistance);
+                //float y = PerlinNoise.GenerateNoise(x, z, scale, octaves, persistance);
 
-                if(y < 0) { y = 0; }
-                else if(y > 1) { y = 1; }
-                    
-                vertices[i] = new Vector3(x, y, z);
+                //if(y < 0) { y = 0; }
+                //else if(y > 1) { y = 1; }
+                  
+                vertices[i] = new Vector3(x, heightMap[z, x] * 12, z);
                 i++;
                 //xPosition++;
             }

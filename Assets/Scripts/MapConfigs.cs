@@ -15,6 +15,13 @@ public class MapConfigs : ScriptableObject
     public int octaves;
     public float persistance;
     public float lacunarity;
+    [System.Serializable]
+    public class teste
+    {
+        public Color color;
+    }
+
+    public teste[] testes;
     void Start()
     {
         
