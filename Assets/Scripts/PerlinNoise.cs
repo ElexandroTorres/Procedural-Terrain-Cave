@@ -2,16 +2,19 @@
 
 public static class PerlinNoise
 {
-    static float maxNoiseHeight = float.MinValue;
-    static float minNoiseHeight = float.MaxValue;
-    public static float[,] GenerateNoiseMap(int width, int height, float scale, int octaves, float persistance, float lacunarity)
+    public static float[,] GenerateNoiseMap(int width, int height, int startX, int startY, float scale, int octaves, float persistance, float lacunarity)
     {
-        float[,] noiseMap = new float[height, width];    
+        float[,] noiseMap = new float[height, width];
+
+        int testex = startX;
+        int testey = startY;
  
         for (int y = 0; y < height; y++)
         {
+            startX = testex;
             for (int x = 0; x < width; x++)
             {
+                
                 //float sampleX = x / scale;
                 //float sampleY = y / scale;
 
@@ -25,8 +28,9 @@ public static class PerlinNoise
 
                 for(int i = 0; i < octaves; i++)
                 {
-                    float sampleX = x / scale * frequency;
-                    float sampleY = y / scale * frequency;
+                    Debug.Log(startX);
+                    float sampleX = startX / scale * frequency;
+                    float sampleY = startY / scale * frequency;
 
                     float perlinValue = Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1;
                     //total += Mathf.PerlinNoise(xCoord, yCoord) * amplitude;
@@ -37,18 +41,11 @@ public static class PerlinNoise
                     
                 }
                 
-                if(noiseHeight > maxNoiseHeight)
-                {
-                    maxNoiseHeight = noiseHeight;
-                }
-                else if(noiseHeight < minNoiseHeight)
-                {
-                    minNoiseHeight = noiseHeight;
-                }
 
                 noiseMap[y, x] = noiseHeight;
-                
+                startX++;
             }
+            startY++;
         }
         
         for (int y = 0; y < height; y++)
@@ -56,7 +53,7 @@ public static class PerlinNoise
             for (int x = 0; x < width; x++)
             {
                 //noiseMap[y, x] = Mathf.Clamp(noiseMap[y, x], 0, 1);
-                noiseMap[y, x] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[y, x]);
+                //noiseMap[y, x] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[y, x]);
             }
         }
         
@@ -64,11 +61,16 @@ public static class PerlinNoise
 
     }
 
-    public static float[,] GenerateNoise(int width, int height, float scale, int octaves, float persistance)
+    public static float[,] GenerateNoise(int width, int height, int startX, int startY, float scale, int octaves, float persistance)
     {
         float[,] noiseMap = new float[height, width];
+
+        int testex = startX;
+        int testey = startY;
+
         for (int y = 0; y < height; y++)
         {
+            startX = testex;
             for (int x = 0; x < width; x++)
             {
                 float total = 0;
@@ -76,8 +78,8 @@ public static class PerlinNoise
                 float amplitude = 1;
                 float maxValue = 0;
 
-                float xCoord = (float)x / scale * frequency;
-                float yCoord = (float)y / scale * frequency;
+                float xCoord = (float)startX / scale * frequency;
+                float yCoord = (float)startY / scale * frequency;
 
                 for(int i = 0; i < octaves; i++)
                 {
@@ -90,33 +92,54 @@ public static class PerlinNoise
                 }
 
                 noiseMap[y, x] = total / maxValue;
-
+                startX++;
             }
+            startY++;
         }
 
         //return total / maxValue;
         return noiseMap;
     }
 
-    public static float[,] GenerateNoiseTeste(int width, int height, float scale)
+    public static float[,] GenerateNoiseTeste(int width, int height, float scale, int startX, int startY)
     {
         float[,] noiseMap = new float[height, width];
 
-        float frequency = 4.0f;
+        int testex = startX;
+        int testey = startY;
+
+        //float frequency = 4.0f;
         
         for(int y = 0; y < height; y++)
         {
+            testex = startX;
             for (int x = 0; x < width; x++)
             {
-                float xCoord = (float)x / scale * frequency;
-                float yCoord = (float)y / scale * frequency;
+                //float xCoord = (float)testex / width * frequency;
+                //float yCoord = (float)testey / height * frequency;
+                float xCoord = (float)testex / scale;
+                float yCoord = (float)testey / scale;
+
+                float frequency = 1.0f;
+
+                float perlinValue = Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+
+                frequency = 2.0f;
+
+                perlinValue += 0.5f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+
+                frequency = 4.0f;
+
+                perlinValue += 0.25f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
 
                 //float perlinValue = Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
-                float perlinValue = Mathf.PerlinNoise(xCoord, yCoord);
+                //float perlinValue = Mathf.PerlinNoise(xCoord, yCoord);
                 //perlinValue = Mathf.Clamp(perlinValue, 0, 1);
 
-                noiseMap[y, x] = perlinValue;
+                noiseMap[y, x] = perlinValue / 1.75f;
+                testex++;
             }
+            testey++;
         }
         return noiseMap;
         

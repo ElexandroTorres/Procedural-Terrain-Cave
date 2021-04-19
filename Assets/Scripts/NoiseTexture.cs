@@ -25,9 +25,9 @@ public class NoiseTexture : MonoBehaviour
         this.persistance = mapConfigs.persistance;
         this.lacunarity = mapConfigs.lacunarity;
 
-        //noiseMap = PerlinNoise.GenerateNoise(width, height, scale, octaves, persistance);
-        noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale, octaves, persistance, lacunarity);
-        //noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale);
+        //noiseMap = PerlinNoise.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
+        //noiseMap = PerlinNoise.GenerateNoiseMap(width, height, 0, 0, scale, octaves, persistance, lacunarity);
+        noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale, 0, 0);
 
         Renderer renderer = GetComponent<Renderer>();  
         renderer.sharedMaterial.mainTexture = GenerateTexture();

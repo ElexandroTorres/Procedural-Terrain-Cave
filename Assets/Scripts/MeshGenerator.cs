@@ -15,8 +15,8 @@ public class MeshGenerator : MonoBehaviour
     public int xSize;
     public int zSize;
 
-    public float xPosition;
-    public float zPosition;
+    public int xPosition;
+    public int zPosition;
 
     public float scale;
 
@@ -28,14 +28,15 @@ public class MeshGenerator : MonoBehaviour
 
     void Awake()
     {
-        xPosition = this.transform.position.x;
-        zPosition = this.transform.position.z;
+
     }
 
     void Start()
     {
         mesh = new Mesh();
         
+        xPosition = (int)this.transform.position.x;
+        zPosition = (int)this.transform.position.z;
 
         xSize = mapConfigs.width;
         zSize = mapConfigs.height;
@@ -74,9 +75,9 @@ public class MeshGenerator : MonoBehaviour
     {
         int i = 0;
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        heightMap = PerlinNoise.GenerateNoiseMap(xSize + 1, zSize + 1, scale, octaves, persistance, lacunarity);
-        //heightMap = PerlinNoise.GenerateNoise(xSize + 1, zSize + 1, scale, octaves, persistance);
-        //heightMap = PerlinNoise.GenerateNoiseTeste(xSize + 1, zSize + 1, scale);
+        //heightMap = PerlinNoise.GenerateNoiseMap(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance, lacunarity);
+        //heightMap = PerlinNoise.GenerateNoise(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance);
+        heightMap = PerlinNoise.GenerateNoiseTeste(xSize + 1, zSize + 1, scale, xPosition, zPosition);
 
         for (int z = 0; z <= zSize; z++)
         {
@@ -87,7 +88,7 @@ public class MeshGenerator : MonoBehaviour
                 //if(y < 0) { y = 0; }
                 //else if(y > 1) { y = 1; }
                   
-                vertices[i] = new Vector3(x, heightMap[z, x] * 12, z);
+                vertices[i] = new Vector3(x, heightMap[z, x] * 15, z);
                 i++;
                 //xPosition++;
             }
