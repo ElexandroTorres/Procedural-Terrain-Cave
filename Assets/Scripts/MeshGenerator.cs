@@ -26,6 +26,12 @@ public class MeshGenerator : MonoBehaviour
 
     public float lacunarity;
 
+    void Awake()
+    {
+        xPosition = this.transform.position.x;
+        zPosition = this.transform.position.z;
+    }
+
     void Start()
     {
         mesh = new Mesh();
@@ -37,9 +43,6 @@ public class MeshGenerator : MonoBehaviour
         octaves = mapConfigs.octaves;
         persistance = mapConfigs.persistance;
         this.lacunarity = mapConfigs.lacunarity;
-
-        xPosition = this.transform.position.x;
-        zPosition = this.transform.position.z;
         
         GetComponent<MeshFilter>().mesh = mesh;    
         CreateShape();
@@ -72,6 +75,8 @@ public class MeshGenerator : MonoBehaviour
         int i = 0;
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
         heightMap = PerlinNoise.GenerateNoiseMap(xSize + 1, zSize + 1, scale, octaves, persistance, lacunarity);
+        //heightMap = PerlinNoise.GenerateNoise(xSize + 1, zSize + 1, scale, octaves, persistance);
+        //heightMap = PerlinNoise.GenerateNoiseTeste(xSize + 1, zSize + 1, scale);
 
         for (int z = 0; z <= zSize; z++)
         {

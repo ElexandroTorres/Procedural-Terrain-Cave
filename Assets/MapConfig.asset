@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 50
   height: 50
-  scale: 24.7
+  scale: 13.6
   octaves: 4
   persistance: 0.3
   lacunarity: 2
+  testes:
+  - color: {r: 0.7735849, g: 0.26637593, b: 0.26637593, a: 0}
+  - color: {r: 0, g: 0, b: 0, a: 0}

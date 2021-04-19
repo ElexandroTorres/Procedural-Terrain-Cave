@@ -25,7 +25,9 @@ public class NoiseTexture : MonoBehaviour
         this.persistance = mapConfigs.persistance;
         this.lacunarity = mapConfigs.lacunarity;
 
+        //noiseMap = PerlinNoise.GenerateNoise(width, height, scale, octaves, persistance);
         noiseMap = PerlinNoise.GenerateNoiseMap(width, height, scale, octaves, persistance, lacunarity);
+        //noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale);
 
         Renderer renderer = GetComponent<Renderer>();  
         renderer.sharedMaterial.mainTexture = GenerateTexture();
@@ -69,7 +71,7 @@ public class NoiseTexture : MonoBehaviour
     {
         //float sample = PerlinNoise.GenerateNoise(x, y, scale, octaves, persistance);
         float sample = noiseMap[y, x];
-
+        /*
         if(sample >= 0.5f)
         {
             return new Color(79, 42, 0);
@@ -77,8 +79,8 @@ public class NoiseTexture : MonoBehaviour
         else {
             return new Color(79, 235, 191);
         }
-
-        //return Color.Lerp(Color.black, Color.white, sample);
+        */
+        return Color.Lerp(Color.black, Color.white, sample);
     }
     
 
