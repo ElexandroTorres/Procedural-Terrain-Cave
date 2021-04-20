@@ -37,13 +37,23 @@ public class NoiseTexture : MonoBehaviour
     {
         Texture2D texture = new Texture2D(width, height);
 
-        //Color[] colorMap = new Color[height * width];
+        Color[] colorMap = new Color[height * width];
 
         for(int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                texture.SetPixel(x, y, CalculateColor(x, y));
+                
+                for(int i = 0; i < mapConfigs.terrains.Length; i++)
+                {
+                    if(noiseMap[y, x] <= mapConfigs.terrains[i].terrainHeight)
+                    {
+                        texture.SetPixel(x, y, mapConfigs.terrains[i].color);
+                        break;
+                    }
+                }
+                
+                //texture.SetPixel(x, y, CalculateColor(x, y));
                 //colorMap[y * width + x] = Color.Lerp(Color.black, Color.white, noiseMap[y, x]);
             }
         }

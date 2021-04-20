@@ -14,10 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 50
   height: 50
-  scale: 25.8
+  scale: 25
   octaves: 4
   persistance: 0.25
   lacunarity: 2
-  testes:
-  - color: {r: 0.7735849, g: 0.26637593, b: 0.26637593, a: 0}
-  - color: {r: 0, g: 0, b: 0, a: 0}
+  terrains:
+  - terrainName: Water
+    terrainHeight: 0.3
+    color: {r: 0.13333333, g: 0.25893784, b: 0.972549, a: 0}
+  - terrainName: Sand
+    terrainHeight: 0.45
+    color: {r: 0.93211555, g: 1, b: 0.5518868, a: 0}
+  - terrainName: Grass
+    terrainHeight: 0.6
+    color: {r: 0.18349792, g: 1, b: 0.0990566, a: 0}
+  - terrainName: terra
+    terrainHeight: 0.72
+    color: {r: 0.49056602, g: 0.2707369, b: 0.2707369, a: 0}
+  - terrainName: rock
+    terrainHeight: 0.9
+    color: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
+  - terrainName: snow
+    terrainHeight: 1
+    color: {r: 1, g: 1, b: 1, a: 0}

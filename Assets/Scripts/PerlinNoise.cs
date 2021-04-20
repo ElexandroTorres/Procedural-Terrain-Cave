@@ -107,8 +107,6 @@ public static class PerlinNoise
 
         int testex = startX;
         int testey = startY;
-
-        //float frequency = 4.0f;
         
         for(int y = 0; y < height; y++)
         {
@@ -117,6 +115,7 @@ public static class PerlinNoise
             {
                 //float xCoord = (float)testex / width * frequency;
                 //float yCoord = (float)testey / height * frequency;
+                //fazer um for aqui.
                 float xCoord = (float)testex / scale;
                 float yCoord = (float)testey / scale;
 
@@ -132,11 +131,15 @@ public static class PerlinNoise
 
                 perlinValue += 0.25f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
 
+                frequency = 8.0f;
+
+                perlinValue += 0.125f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+
                 //float perlinValue = Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
                 //float perlinValue = Mathf.PerlinNoise(xCoord, yCoord);
                 //perlinValue = Mathf.Clamp(perlinValue, 0, 1);
-
-                noiseMap[y, x] = perlinValue / 1.75f;
+                
+                noiseMap[y, x] = perlinValue / (1.75f + 0.125f);
                 testex++;
             }
             testey++;

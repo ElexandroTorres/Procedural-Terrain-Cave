@@ -6,11 +6,11 @@ using UnityEngine;
 public class MeshGenerator : MonoBehaviour
 {
     private Mesh mesh;
-    public MapConfigs mapConfigs;
     private Vector3[] vertices;
     private int[] triangles;
-
     private float[,] heightMap;
+    public MapConfigs mapConfigs;
+    
 
     public int xSize;
     public int zSize;
@@ -25,11 +25,6 @@ public class MeshGenerator : MonoBehaviour
     public float persistance;
 
     public float lacunarity;
-
-    void Awake()
-    {
-
-    }
 
     void Start()
     {
@@ -50,27 +45,6 @@ public class MeshGenerator : MonoBehaviour
         UpdateMesh();
     }
 
-    float CalculatePerlin(float x, float z, float scale, int octaves, float persistance)
-    {
-        //float amplitude  = 1;
-        //float frenquency = 1;
-        //float height = 0;
-
-        //for(int i = 0; i < octaves; i++)
-        //{
-            float sampleX = x / scale;
-            float sampleZ = z / scale;
-
-            return Mathf.PerlinNoise(sampleX, sampleZ);
-            //perlin =  Mathf.PerlinNoise(sampleX, sampleZ);
-            //height += perlin * amplitude;
-            //amplitude *= persistance;
-        //}
-        
-        
-    }
-
-    
     void CreateShape()
     {
         int i = 0;
