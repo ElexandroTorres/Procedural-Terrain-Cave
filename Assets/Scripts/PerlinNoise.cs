@@ -76,22 +76,23 @@ public static class PerlinNoise
                 float total = 0;
                 float frequency = 1;
                 float amplitude = 1;
-                float maxValue = 0;
-
-                float xCoord = (float)startX / scale * frequency;
-                float yCoord = (float)startY / scale * frequency;
+                float amplitudeSum = 0;
 
                 for(int i = 0; i < octaves; i++)
                 {
+                    float xCoord = (float)startX / scale * frequency;
+                    float yCoord = (float)startY / scale * frequency;
+
+
                     total += Mathf.PerlinNoise(xCoord, yCoord) * amplitude;
 
-                    maxValue += amplitude;
+                    amplitudeSum += amplitude;
 
                     amplitude *= persistance;
                     frequency *= 2;
                 }
 
-                noiseMap[y, x] = total / maxValue;
+                noiseMap[y, x] = total / amplitudeSum;
                 startX++;
             }
             startY++;
@@ -121,19 +122,19 @@ public static class PerlinNoise
 
                 float frequency = 1.0f;
 
-                float perlinValue = Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+                float perlinValue = Mathf.PerlinNoise(frequency * xCoord + 15.3f, frequency * yCoord + 15.3f);
 
                 frequency = 2.0f;
 
-                perlinValue += 0.5f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+                perlinValue += 0.5f * Mathf.PerlinNoise(frequency * xCoord + 20.3f, frequency * yCoord + 14.7f);
 
                 frequency = 4.0f;
 
-                perlinValue += 0.25f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+                perlinValue += 0.25f * Mathf.PerlinNoise(frequency * xCoord + 60.1f, frequency * yCoord + 9.3f);
 
                 frequency = 8.0f;
 
-                perlinValue += 0.125f * Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
+                perlinValue += 0.125f * Mathf.PerlinNoise(frequency * xCoord + 15.0f, frequency * yCoord + 12.8f);
 
                 //float perlinValue = Mathf.PerlinNoise(frequency * xCoord, frequency * yCoord);
                 //float perlinValue = Mathf.PerlinNoise(xCoord, yCoord);

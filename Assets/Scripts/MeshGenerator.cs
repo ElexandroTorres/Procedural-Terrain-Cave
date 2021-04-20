@@ -8,6 +8,7 @@ public class MeshGenerator : MonoBehaviour
     private Mesh mesh;
     private Vector3[] vertices;
     private int[] triangles;
+    private Vector2[] uvs;
     private float[,] heightMap;
     public MapConfigs mapConfigs;
     
@@ -43,6 +44,9 @@ public class MeshGenerator : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;    
         CreateShape();
         UpdateMesh();
+
+        GetComponent<MeshCollider>().sharedMesh = null;
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     void CreateShape()
@@ -50,8 +54,8 @@ public class MeshGenerator : MonoBehaviour
         int i = 0;
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
         //heightMap = PerlinNoise.GenerateNoiseMap(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance, lacunarity);
-        //heightMap = PerlinNoise.GenerateNoise(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance);
-        heightMap = PerlinNoise.GenerateNoiseTeste(xSize + 1, zSize + 1, scale, xPosition, zPosition);
+        heightMap = PerlinNoise.GenerateNoise(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance);
+        //heightMap = PerlinNoise.GenerateNoiseTeste(xSize + 1, zSize + 1, scale, xPosition, zPosition);
 
         for (int z = 0; z <= zSize; z++)
         {
@@ -91,6 +95,18 @@ public class MeshGenerator : MonoBehaviour
             }
             currentVertex++;
         }
+
+        uvs = new Vector2[vertices.Length];
+
+        i = 0;
+        for (int z = 0; z <= zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++)
+            {
+                uvs[i] = new Vector2((float)x / xSize, (float)z / zSize);
+                i++;
+            }
+        }
     }
 
     private void UpdateMesh()
@@ -99,6 +115,7 @@ public class MeshGenerator : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uvs;
 
         mesh.RecalculateNormals();
     }

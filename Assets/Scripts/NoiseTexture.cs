@@ -16,6 +16,26 @@ public class NoiseTexture : MonoBehaviour
 
     public float lacunarity;
 
+    public Terrain[] terrains;
+
+    public void teste()
+    {
+        
+        this.width = mapConfigs.width;
+        this.height = mapConfigs.height;
+        this.scale = mapConfigs.scale;
+        this.octaves = mapConfigs.octaves;
+        this.persistance = mapConfigs.persistance;
+        this.lacunarity = mapConfigs.lacunarity;
+
+        noiseMap = PerlinNoise.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
+        //noiseMap = PerlinNoise.GenerateNoiseMap(width, height, 0, 0, scale, octaves, persistance, lacunarity);
+        //noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale, 0, 0);
+
+        Renderer renderer = GetComponent<Renderer>();  
+        renderer.sharedMaterial.mainTexture = GenerateTexture();
+    }
+
     void Start()
     {
         this.width = mapConfigs.width;
@@ -24,10 +44,11 @@ public class NoiseTexture : MonoBehaviour
         this.octaves = mapConfigs.octaves;
         this.persistance = mapConfigs.persistance;
         this.lacunarity = mapConfigs.lacunarity;
+        this.terrains = mapConfigs.terrains;
 
-        //noiseMap = PerlinNoise.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
+        noiseMap = PerlinNoise.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
         //noiseMap = PerlinNoise.GenerateNoiseMap(width, height, 0, 0, scale, octaves, persistance, lacunarity);
-        noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale, 0, 0);
+        //noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale, 0, 0);
 
         Renderer renderer = GetComponent<Renderer>();  
         renderer.sharedMaterial.mainTexture = GenerateTexture();
@@ -44,11 +65,11 @@ public class NoiseTexture : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 
-                for(int i = 0; i < mapConfigs.terrains.Length; i++)
+                for(int i = 0; i < terrains.Length; i++)
                 {
-                    if(noiseMap[y, x] <= mapConfigs.terrains[i].terrainHeight)
+                    if(noiseMap[y, x] <= terrains[i].terrainHeight)
                     {
-                        texture.SetPixel(x, y, mapConfigs.terrains[i].color);
+                        texture.SetPixel(x, y, terrains[i].terrainColor);
                         break;
                     }
                 }
