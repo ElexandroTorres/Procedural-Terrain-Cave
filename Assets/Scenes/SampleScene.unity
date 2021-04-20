@@ -351,6 +351,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapConfigs: {fileID: 11400000, guid: e7e8318e38faf6744b36c0f02022dc85, type: 2}
+  cavePrefab: {fileID: 4978959018296754834, guid: e60848508bcc44a42aa0c3cf9ace8b64,
+    type: 3}
   xSize: 50
   zSize: 50
   xPosition: 0

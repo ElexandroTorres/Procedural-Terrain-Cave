@@ -11,6 +11,9 @@ public class MeshGenerator : MonoBehaviour
     private Vector2[] uvs;
     private float[,] heightMap;
     public MapConfigs mapConfigs;
+
+    // TESTE
+    public GameObject cavePrefab;
     
 
     public int xSize;
@@ -67,6 +70,12 @@ public class MeshGenerator : MonoBehaviour
                 //else if(y > 1) { y = 1; }
                   
                 vertices[i] = new Vector3(x, heightMap[z, x] * 15, z);
+                //teste
+                if(heightMap[z, x] < 0.3)
+                {
+                    Instantiate(cavePrefab, new Vector3(x, heightMap[z, x] * 15, z), Quaternion.identity);
+                }
+                //teste
                 i++;
                 //xPosition++;
             }
