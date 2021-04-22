@@ -8,9 +8,10 @@ public class CaveEntranceBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player"))
         {
-            //Começar a garregar a caverna.
+            other.gameObject.transform.position = new Vector3(other.transform.position.x, other.transform.position.y + 20, other.transform.position.z);
+            Debug.Log("entrou!!!");
         }
     }
 }

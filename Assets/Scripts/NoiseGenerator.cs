@@ -2,8 +2,9 @@
 
 // Três versos do noise foram implementadas para quesito de testes. Duas baseadas em videos e uma baseada
 // um conteudo de noise. Depois apagar para ficar apenas com a usada no codigo.
-public static class PerlinNoise
+public static class NoiseGenerator
 {
+
     /* Versão 1 do Noise */ 
     public static float[,] GenerateNoiseMap(int width, int height, int startX, int startY, float scale, int octaves, float persistance, float lacunarity)
     {
@@ -150,7 +151,6 @@ public static class PerlinNoise
         }
         return noiseMap;
         
-    }
-   
+    } 
 
 }

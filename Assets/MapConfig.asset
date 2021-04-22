@@ -12,12 +12,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cf1d665c106a84ba527de7467d09c5, type: 3}
   m_Name: MapConfig
   m_EditorClassIdentifier: 
-  width: 50
-  height: 50
+  width: 250
+  height: 250
+  numberTerrains: 9
+  startX: 0
+  startZ: 0
   scale: 25
   octaves: 4
   persistance: 0.3
   lacunarity: 2
+  heightMutiplier: 15
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.004928589
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.3144948
+      value: 0.056580365
+      inSlope: 0.56995183
+      outSlope: 0.56995183
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6244355
+      value: 0.22389646
+      inSlope: 1.2371191
+      outSlope: 1.2371191
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7402654
+      value: 0.4684526
+      inSlope: 1.9709117
+      outSlope: 1.9709117
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.85130197
+      value: 0.92216045
+      inSlope: 2.0511434
+      outSlope: 2.0511434
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.91298294
+      value: 0.99538094
+      inSlope: -0.2157869
+      outSlope: -0.2157869
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9448287
+      value: 1.0011243
+      inSlope: 0.049055282
+      outSlope: 0.049055282
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   terrains:
   - terrainType: 0
     terrainHeight: 0.3
@@ -34,3 +116,5 @@ MonoBehaviour:
   - terrainType: 4
     terrainHeight: 2
     terrainColor: {r: 1, g: 1, b: 1, a: 0}
+  customsOctaves: []
+  treeOcupation: 0

@@ -19,8 +19,7 @@ public class NoiseTexture : MonoBehaviour
     public Terrain[] terrains;
 
     public void teste()
-    {
-        
+    { 
         this.width = mapConfigs.width;
         this.height = mapConfigs.height;
         this.scale = mapConfigs.scale;
@@ -28,7 +27,7 @@ public class NoiseTexture : MonoBehaviour
         this.persistance = mapConfigs.persistance;
         this.lacunarity = mapConfigs.lacunarity;
 
-        noiseMap = PerlinNoise.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
+        noiseMap = NoiseGenerator.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
         //noiseMap = PerlinNoise.GenerateNoiseMap(width, height, 0, 0, scale, octaves, persistance, lacunarity);
         //noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale, 0, 0);
 
@@ -46,7 +45,7 @@ public class NoiseTexture : MonoBehaviour
         this.lacunarity = mapConfigs.lacunarity;
         this.terrains = mapConfigs.terrains;
 
-        noiseMap = PerlinNoise.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
+        noiseMap = NoiseGenerator.GenerateNoise(width, height, 0, 0, scale, octaves, persistance);
         //noiseMap = PerlinNoise.GenerateNoiseMap(width, height, 0, 0, scale, octaves, persistance, lacunarity);
         //noiseMap = PerlinNoise.GenerateNoiseTeste(width, height, scale, 0, 0);
 

@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(NoiseTexture))]
+[CustomEditor(typeof(MapConfigs))]
 public class NoiseConfigsVisualize : Editor
 {
     public override void OnInspectorGUI()
     {
-        NoiseTexture testando = (NoiseTexture)target;
+        DrawDefaultInspector();
+        //NoiseTexture testando = (NoiseTexture)target;
         if(GUILayout.Button("TESTE"))
         {
-            testando.teste();
+          //  testando.teste();
         }
 
         //EditorGUILayout.LabelField("Level", myTarget.Level.ToString());

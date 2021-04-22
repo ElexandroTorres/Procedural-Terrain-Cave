@@ -5,99 +5,66 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour
 {
-    private Mesh mesh;
-    private Vector3[] vertices;
-    private int[] triangles;
-    private Vector2[] uvs;
-    private float[,] heightMap;
     public MapConfigs mapConfigs;
-
-    // TESTE
-    public GameObject cavePrefab;
+    public AnimationCurve heightCurve;
+    private Mesh _mesh;
+    private Vector3[] _vertices;
+    private int[] _triangles;
+    private Vector2[] _uvs;
+    private float[,] _heightMap;
+    private int _xPosition;
+    private int _zPosition;
     
-
-    public int xSize;
-    public int zSize;
-
-    public int xPosition;
-    public int zPosition;
-
-    public float scale;
-
-    public int octaves;
-
-    public float persistance;
-
-    public float lacunarity;
-
     void Start()
     {
-        mesh = new Mesh();
-        
-        xPosition = (int)this.transform.position.x;
-        zPosition = (int)this.transform.position.z;
+        _xPosition = (int)this.transform.position.x;
+        _zPosition = (int)this.transform.position.z;
 
-        xSize = mapConfigs.width;
-        zSize = mapConfigs.height;
-        scale = mapConfigs.scale;
-        octaves = mapConfigs.octaves;
-        persistance = mapConfigs.persistance;
-        this.lacunarity = mapConfigs.lacunarity;
+        _mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = _mesh;   
         
-        GetComponent<MeshFilter>().mesh = mesh;    
-        CreateShape();
+        CreateMeshShape();
         UpdateMesh();
 
         GetComponent<MeshCollider>().sharedMesh = null;
-        GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
 
-    void CreateShape()
+    void CreateMeshShape()
     {
-        int i = 0;
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+        int current = 0;
+        _vertices = new Vector3[(mapConfigs.width + 1) * (mapConfigs.height + 1)];
         //heightMap = PerlinNoise.GenerateNoiseMap(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance, lacunarity);
-        heightMap = PerlinNoise.GenerateNoise(xSize + 1, zSize + 1, xPosition, zPosition, scale, octaves, persistance);
+        _heightMap = NoiseGenerator.GenerateNoise(mapConfigs.width + 1, mapConfigs.height + 1, _xPosition, _zPosition,
+            mapConfigs.scale, mapConfigs.octaves, mapConfigs.persistance);
         //heightMap = PerlinNoise.GenerateNoiseTeste(xSize + 1, zSize + 1, scale, xPosition, zPosition);
 
-        for (int z = 0; z <= zSize; z++)
+        for (int z = 0; z <= mapConfigs.height; z++)
         {
-            for (int x = 0; x <= xSize; x++)
-            {
-                //float y = PerlinNoise.GenerateNoise(x, z, scale, octaves, persistance);
-
-                //if(y < 0) { y = 0; }
-                //else if(y > 1) { y = 1; }
-                  
-                vertices[i] = new Vector3(x, heightMap[z, x] * 15, z);
-                //teste
-                if(heightMap[z, x] < 0.3)
-                {
-                    Instantiate(cavePrefab, new Vector3(x, heightMap[z, x] * 15, z), Quaternion.identity);
-                }
-                //teste
-                i++;
-                //xPosition++;
+            for (int x = 0; x <= mapConfigs.width; x++)
+            {   
+                _vertices[current] = new Vector3(x, _heightMap[z, x] * mapConfigs.heightMutiplier, z);
+ 
+                current++;
             }
-            //zPosition++;
         }
 
-        triangles = new int[xSize * xSize * 6];
+        _triangles = new int[mapConfigs.width * mapConfigs.height * 6];
 
         int index = 0;
         int currentVertex = 0;
 
-        for (int z = 0; z < zSize; z++)
+        for (int z = 0; z < mapConfigs.height; z++)
         {
-            for (int x = 0; x < xSize; x++)
+            for (int x = 0; x < mapConfigs.width; x++)
             {
-                triangles[index] = currentVertex;
-                triangles[index + 1] = xSize + 1 + currentVertex;
-                triangles[index +2] = currentVertex + 1;
+                _triangles[index] = currentVertex;
+                _triangles[index + 1] = mapConfigs.width + 1 + currentVertex;
+                _triangles[index +2] = currentVertex + 1;
 
-                triangles[index +3] = currentVertex + 1;
-                triangles[index +4] = xSize + 1 + currentVertex;
-                triangles[index +5] = xSize + 2 + currentVertex; 
+                _triangles[index +3] = currentVertex + 1;
+                _triangles[index +4] = mapConfigs.width + 1 + currentVertex;
+                _triangles[index +5] = mapConfigs.width + 2 + currentVertex; 
 
                 index += 6;
                 currentVertex++;
@@ -105,28 +72,28 @@ public class MeshGenerator : MonoBehaviour
             currentVertex++;
         }
 
-        uvs = new Vector2[vertices.Length];
+        _uvs = new Vector2[_vertices.Length];
 
-        i = 0;
-        for (int z = 0; z <= zSize; z++)
+        current = 0;
+        for (int z = 0; z <= mapConfigs.height; z++)
         {
-            for (int x = 0; x <= xSize; x++)
+            for (int x = 0; x <= mapConfigs.width; x++)
             {
-                uvs[i] = new Vector2((float)x / xSize, (float)z / zSize);
-                i++;
+                _uvs[current] = new Vector2((float)x / mapConfigs.width, (float)z / mapConfigs.height);
+                current++;
             }
         }
     }
 
     private void UpdateMesh()
     {
-        mesh.Clear();
+        _mesh.Clear();
 
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.uv = uvs;
+        _mesh.vertices = _vertices;
+        _mesh.triangles = _triangles;
+        _mesh.uv = _uvs;
 
-        mesh.RecalculateNormals();
+        _mesh.RecalculateNormals();
     }
 
 }
