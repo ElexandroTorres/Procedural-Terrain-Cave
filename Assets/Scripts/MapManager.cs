@@ -10,6 +10,13 @@ public class MapManager : MonoBehaviour
 
     public GameObject player;
 
+    public enum Direction
+    {
+        Left, Right, Up, Down, None
+    }
+
+    Direction playerDirection;
+
     private TerrainPiece terrainPiece;
 
     //private List<MeshGenerator> terrains;
@@ -52,9 +59,59 @@ public class MapManager : MonoBehaviour
 
     void teste()
     {
+        Vector2[, ] temp = new Vector2[3, 3];
+
+        for (int i = 0; i < temp.GetLength(0); i++)
+        {
+            for (int j = 0; j < temp.GetLength(1); j++)
+            {
+                temp[i, j] = piecesPositions[i, j];
+            }
+        }
         
-        float playerX = player.transform.position.x + mapConfigs.width;
-        float playerZ = player.transform.position.z + mapConfigs.height;
+        //float playerX = player.transform.position.x + mapConfigs.width;
+        //float playerZ = player.transform.position.z + mapConfigs.height;
+
+        float playerX = player.transform.position.x;
+        float playerZ = player.transform.position.z;
+
+        switch(PlayerDirection())
+        {
+            case Direction.Right:
+                Destroy(terrains[0, 0].gameObject);
+                Destroy(terrains[1, 0].gameObject);
+                Destroy(terrains[2, 0].gameObject);
+                break;
+            case Direction.Left:
+                Destroy(terrains[0, 2].gameObject);
+                Destroy(terrains[1, 2].gameObject);
+                Destroy(terrains[2, 2].gameObject);
+                break;
+            case Direction.Down:
+                Destroy(terrains[2, 0].gameObject);
+                Destroy(terrains[2, 1].gameObject);
+                Destroy(terrains[2, 2].gameObject);
+                break;
+            case Direction.Up:
+                Destroy(terrains[0, 0].gameObject);
+                Destroy(terrains[0, 1].gameObject);
+                Destroy(terrains[0, 2].gameObject);
+                break;
+        }
+
+
+            if(seg < 5)
+            {
+            //Instantiate(terrainPrefab, 
+             //   new Vector3(piecesPositions[0, 0].x - mapConfigs.width , 0, piecesPositions[0, 0].y), Quaternion.identity);
+            //Instantiate(terrainPrefab, 
+               // new Vector3(piecesPositions[1, 0].x - mapConfigs.width, 0, piecesPositions[0, 0].y), Quaternion.identity);
+            //Instantiate(terrainPrefab, 
+                //new Vector3(piecesPositions[2, 0].x - mapConfigs.width, 0, piecesPositions[0, 0].y), Quaternion.identity);
+            }
+            
+
+       
 
         //Debug.Log("PosiçãoPlayer x: " + playerX.ToString());
         //Debug.Log("PosiçãoPlayr z: " + playerZ.ToString());
@@ -63,24 +120,28 @@ public class MapManager : MonoBehaviour
         int z = Mathf.RoundToInt(playerZ / mapConfigs.height) * mapConfigs.height;
         //int x = (int)(playerX - (mapConfigs.width / 2) - mapConfigs.width);
         //int z = (int)(playerZ - (mapConfigs.height / 2) - mapConfigs.height);
+        x = x - mapConfigs.width / 2;
+        z = z + mapConfigs.height / 2;
 
 
         for(int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                if(piecesPositions[i, j].Equals(new Vector2(x, z)))
+                if(player.transform.position.x < piecesPositions[i, j].x )
                 {
                     //return;
                 }
             }
         }
 
-        if(seg < 5)
+        if(seg < 1)
         {
             Debug.Log("Posição x: " + x.ToString());
             Debug.Log("Posição z: " + z.ToString());
-            Instantiate(terrainPrefab, new Vector3(x, 0, z), Quaternion.identity);
+            //Instantiate(terrainPrefab, new Vector3(x + mapConfigs.width, 0, z), Quaternion.identity);
+            //Instantiate(terrainPrefab, new Vector3(x, 0, z), Quaternion.identity);
+            //Instantiate(terrainPrefab, new Vector3(x - mapConfigs.width, 0, z), Quaternion.identity);
             seg++;
         }
         
@@ -90,12 +151,93 @@ public class MapManager : MonoBehaviour
         
     }
 
-    /*
-    public void ShowTextureInfos()
+    public Direction PlayerDirection()
     {
-        noiseTexture = GetComponent<NoiseTexture>();
-        noiseTexture.ShowTextureNoise(width, height, scale, octaves, persistance);
+        if(SmallestOfAllX())
+        {
+            return Direction.Left;
+        }
+        else if(GreatestOfAllX())
+        {
+            return Direction.Right;
+        }
+        else if(SmallestOfAllZ())
+        {
+            return Direction.Down;
+        }
+        else if(GreatestOfAllZ())
+        {
+            return Direction.Up;
+        }
+
+        return Direction.None;
     }
-    */
+
+
+    public bool SmallestOfAllZ()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if(player.transform.position.z > piecesPositions[i, j].y + (mapConfigs.width / 2))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public bool GreatestOfAllZ()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if(player.transform.position.z < piecesPositions[i, j].y )
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+
+    public bool SmallestOfAllX()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if(player.transform.position.x > piecesPositions[i, j].x + (mapConfigs.width / 2))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public bool GreatestOfAllX()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if(player.transform.position.x < piecesPositions[i, j].x )
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
 }
