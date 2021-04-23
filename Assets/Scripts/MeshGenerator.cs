@@ -133,19 +133,53 @@ public class MeshGenerator : MonoBehaviour
         int count = 0;
         int xx = _xPosition;
         int zz = _zPosition;
+
+        int distanceBetweenTrees = 5;
+
+        Random.seed = _xPosition + _zPosition;
+
         for (int z = 0; z <= mapConfigs.height; z++)
         {
             for (int x = 0; x <= mapConfigs.width; x++)
             {   
-                if(count < 5 && _heightMap[z, x] < 0.5f)
+                if(_heightMap[z, x] < 0.3f)
                 {
-                    Instantiate(tree, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier, zz), Quaternion.identity);
-                    count++;
+                    Instantiate(tree, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier + 3, zz), Quaternion.identity);
                 }
-                xx++;
+                distanceBetweenTrees = Random.Range(10, 20);
+                xx += distanceBetweenTrees;
+                x += distanceBetweenTrees;
             }
-            zz++;
+            xx = _xPosition;
+            zz+= distanceBetweenTrees;
+            z += distanceBetweenTrees;
         }
+    }
+
+    private void SmoothObjectMap()
+    {
+        for (int z = 0; z < mapConfigs.height; z++)
+        {
+            for (int x = 0; x < mapConfigs.width; x++)
+            {
+                //caves
+                if(_heightMap[z, x] <= 3.0f)
+                {
+                    _heightMap[z, x] = 3.0f;
+                }
+                else if(_heightMap[z, x] > 3.0f && _heightMap[z, x] <= 7.0f)
+                {
+                    _heightMap[z, x] = 7.0f;
+                }
+                else 
+                {
+                    _heightMap[z, x] = 1.0f;
+                }
+            }
+        }
+
+        //Suavizar, para tirar vizinhos.
+        
     }
 
 }
