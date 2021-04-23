@@ -5,9 +5,7 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     public MapConfigs mapConfigs;
-
     public MeshGenerator terrainPrefab;
-
     public GameObject player;
 
     public enum Direction
@@ -17,13 +15,10 @@ public class MapManager : MonoBehaviour
 
     Direction playerDirection;
 
-    private TerrainPiece terrainPiece;
-
     private MeshGenerator[,] terrains;
 
     private Vector2[,] piecesPositions = new Vector2[3, 3];
 
-    int seg = 0;
 
     void Start()
     {
@@ -50,29 +45,12 @@ public class MapManager : MonoBehaviour
 
     void Update()
     {
-        //if(player.transform.position.x + mapConfigs.width)
-        teste();
+        GenerateNewTerrainPiece();
     }
 
 
-    void teste()
+    void GenerateNewTerrainPiece()
     {
-        Vector2[, ] temp = new Vector2[3, 3];
-
-        for (int i = 0; i < temp.GetLength(0); i++)
-        {
-            for (int j = 0; j < temp.GetLength(1); j++)
-            {
-                temp[i, j] = piecesPositions[i, j];
-            }
-        }
-        
-        //float playerX = player.transform.position.x + mapConfigs.width;
-        //float playerZ = player.transform.position.z + mapConfigs.height;
-
-        float playerX = player.transform.position.x;
-        float playerZ = player.transform.position.z;
-
         switch(PlayerDirection())
         {
             case Direction.Right:
@@ -192,62 +170,9 @@ public class MapManager : MonoBehaviour
 
                 terrains[0, 0] = Instantiate(terrainPrefab, new Vector3(piecesPositions[0, 0].x, 0, piecesPositions[0, 0].y), Quaternion.identity);
                 terrains[0, 1] = Instantiate(terrainPrefab, new Vector3(piecesPositions[0, 1].x, 0, piecesPositions[0, 1].y), Quaternion.identity);
-                terrains[0, 2] = Instantiate(terrainPrefab, new Vector3(piecesPositions[0, 2].x, 0, piecesPositions[0, 2].y), Quaternion.identity);
-
-
-                
+                terrains[0, 2] = Instantiate(terrainPrefab, new Vector3(piecesPositions[0, 2].x, 0, piecesPositions[0, 2].y), Quaternion.identity);                
                 break;
-        }
-
-
-            if(seg < 5)
-            {
-            //Instantiate(terrainPrefab, 
-             //   new Vector3(piecesPositions[0, 0].x - mapConfigs.width , 0, piecesPositions[0, 0].y), Quaternion.identity);
-            //Instantiate(terrainPrefab, 
-               // new Vector3(piecesPositions[1, 0].x - mapConfigs.width, 0, piecesPositions[0, 0].y), Quaternion.identity);
-            //Instantiate(terrainPrefab, 
-                //new Vector3(piecesPositions[2, 0].x - mapConfigs.width, 0, piecesPositions[0, 0].y), Quaternion.identity);
-            }
-            
-
-       
-
-        //Debug.Log("PosiçãoPlayer x: " + playerX.ToString());
-        //Debug.Log("PosiçãoPlayr z: " + playerZ.ToString());
-
-        int x = Mathf.RoundToInt(playerX / mapConfigs.width) * mapConfigs.width;
-        int z = Mathf.RoundToInt(playerZ / mapConfigs.height) * mapConfigs.height;
-        //int x = (int)(playerX - (mapConfigs.width / 2) - mapConfigs.width);
-        //int z = (int)(playerZ - (mapConfigs.height / 2) - mapConfigs.height);
-        x = x - mapConfigs.width / 2;
-        z = z + mapConfigs.height / 2;
-
-
-        for(int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if(player.transform.position.x < piecesPositions[i, j].x )
-                {
-                    //return;
-                }
-            }
-        }
-
-        if(seg < 1)
-        {
-            Debug.Log("Posição x: " + x.ToString());
-            Debug.Log("Posição z: " + z.ToString());
-            //Instantiate(terrainPrefab, new Vector3(x + mapConfigs.width, 0, z), Quaternion.identity);
-            //Instantiate(terrainPrefab, new Vector3(x, 0, z), Quaternion.identity);
-            //Instantiate(terrainPrefab, new Vector3(x - mapConfigs.width, 0, z), Quaternion.identity);
-            seg++;
-        }
-        
-        
-
-        
+        }   
         
     }
 
@@ -286,7 +211,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-
         return true;
     }
 
@@ -302,7 +226,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-
         return true;
     }
 
@@ -320,7 +243,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-
         return true;
     }
 
@@ -336,7 +258,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-
         return true;
     }
 

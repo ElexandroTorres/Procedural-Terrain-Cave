@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-// Três versos do noise foram implementadas para quesito de testes. Duas baseadas em videos e uma baseada
-// um conteudo de noise. Depois apagar para ficar apenas com a usada no codigo.
+/*
+Utilizei três abordagens diferentes de noise. Duas baseadas em videos e uma seguindo um material didatico para
+melhor entendimento do passo a passo. Voltar para modificar depois e polir melhor o ruido gerado.
+*/
 public static class NoiseGenerator
 {
 

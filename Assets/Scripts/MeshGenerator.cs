@@ -6,7 +6,6 @@ using UnityEngine;
 public class MeshGenerator : MonoBehaviour
 {
     public MapConfigs mapConfigs;
-    //public AnimationCurve heightCurve;
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
@@ -21,10 +20,6 @@ public class MeshGenerator : MonoBehaviour
 
     public GameObject cave;
 
-
-    private TerrainObjectsManager terrainManager;
-    
-    
     void Start()
     {
         _xPosition = (int)this.transform.position.x;
@@ -39,28 +34,10 @@ public class MeshGenerator : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = null;
         GetComponent<MeshCollider>().sharedMesh = _mesh;
 
-        //terrainManager = new TerrainObjectsManager(_heightMap,  _xPosition,  _zPosition, tree, rock, cave);
 
-        //Adicionar os objectos na cena.
         SpawnObjects();
     }
     
-    /*
-    public void CreateTerrainMesh(int positionX, int positionZ)
-    {
-        _xPosition = positionX;
-        _zPosition = positionZ;
-
-        _mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = _mesh;   
-        
-        CreateMeshShape();
-        UpdateMesh();
-
-        GetComponent<MeshCollider>().sharedMesh = null;
-        GetComponent<MeshCollider>().sharedMesh = _mesh;
-    }
-    */
     void CreateMeshShape()
     {
         int current = 0;
@@ -130,9 +107,10 @@ public class MeshGenerator : MonoBehaviour
 
     private void SpawnObjects()
     {
-        int count = 0;
         int xx = _xPosition;
         int zz = _zPosition;
+
+        int caveCount = 0;
 
         int distanceBetweenTrees = 5;
 
@@ -142,11 +120,23 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x <= mapConfigs.width; x++)
             {   
-                if(_heightMap[z, x] < 0.3f)
+                if(_heightMap[z, x] < 0.2f && caveCount == 0)
+                {
+                    GameObject newCave = Instantiate(cave, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier + 5, zz), Quaternion.identity);
+                    newCave.transform.parent = this.transform;
+                    caveCount++;
+                }
+                else if(_heightMap[z, x] < 0.35f)
                 {
                     GameObject newTree = Instantiate(tree, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier + 3, zz), Quaternion.identity);
                     newTree.transform.parent = this.transform;
                 }
+                else if(_heightMap[z, x] < 0.4f)
+                {
+                    GameObject newRock = Instantiate(rock, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier, zz), Quaternion.identity);
+                    newRock.transform.parent = this.transform;
+                }
+                
                 distanceBetweenTrees = Random.Range(10, 20);
                 xx += distanceBetweenTrees;
                 x += distanceBetweenTrees;
@@ -155,32 +145,6 @@ public class MeshGenerator : MonoBehaviour
             zz+= distanceBetweenTrees;
             z += distanceBetweenTrees;
         }
-    }
-
-    private void SmoothObjectMap()
-    {
-        for (int z = 0; z < mapConfigs.height; z++)
-        {
-            for (int x = 0; x < mapConfigs.width; x++)
-            {
-                //caves
-                if(_heightMap[z, x] <= 3.0f)
-                {
-                    _heightMap[z, x] = 3.0f;
-                }
-                else if(_heightMap[z, x] > 3.0f && _heightMap[z, x] <= 7.0f)
-                {
-                    _heightMap[z, x] = 7.0f;
-                }
-                else 
-                {
-                    _heightMap[z, x] = 1.0f;
-                }
-            }
-        }
-
-        //Suavizar, para tirar vizinhos.
-        
     }
 
 }
