@@ -351,6 +351,7 @@ MonoBehaviour:
   mapConfigs: {fileID: 11400000, guid: e7e8318e38faf6744b36c0f02022dc85, type: 2}
   terrainPrefab: {fileID: 8293259096797387450, guid: 0dd91e4856cf93f4e91f0082000806da,
     type: 3}
+  player: {fileID: 1533817545}
 --- !u!1 &1533817545
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1533817546
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -400,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480a2341813510546915bbe26ad8857b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSpeed: 5
+  _playerSpeed: 25
 --- !u!136 &1533817548
 CapsuleCollider:
   m_ObjectHideFlags: 0
