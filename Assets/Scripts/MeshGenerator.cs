@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class MeshGenerator : MonoBehaviour
 {
     public MapConfigs mapConfigs;
-    public AnimationCurve heightCurve;
+    //public AnimationCurve heightCurve;
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
@@ -20,6 +20,10 @@ public class MeshGenerator : MonoBehaviour
     public GameObject rock;
 
     public GameObject cave;
+
+
+    private TerrainObjectsManager terrainManager;
+    
     
     void Start()
     {
@@ -34,8 +38,29 @@ public class MeshGenerator : MonoBehaviour
 
         GetComponent<MeshCollider>().sharedMesh = null;
         GetComponent<MeshCollider>().sharedMesh = _mesh;
-    }
 
+        //terrainManager = new TerrainObjectsManager(_heightMap,  _xPosition,  _zPosition, tree, rock, cave);
+
+        //Adicionar os objectos na cena.
+        SpawnObjects();
+    }
+    
+    /*
+    public void CreateTerrainMesh(int positionX, int positionZ)
+    {
+        _xPosition = positionX;
+        _zPosition = positionZ;
+
+        _mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = _mesh;   
+        
+        CreateMeshShape();
+        UpdateMesh();
+
+        GetComponent<MeshCollider>().sharedMesh = null;
+        GetComponent<MeshCollider>().sharedMesh = _mesh;
+    }
+    */
     void CreateMeshShape()
     {
         int current = 0;
@@ -50,9 +75,6 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= mapConfigs.width; x++)
             {   
                 _vertices[current] = new Vector3(x, _heightMap[z, x] * mapConfigs.heightMutiplier, z);
-
-                if(_heightMap[z, x] <= 0.4f) 
-                    Instantiate(tree, new Vector3(x, _heightMap[z, x] * mapConfigs.heightMutiplier, z), Quaternion.identity);
  
                 current++;
             }
@@ -100,9 +122,30 @@ public class MeshGenerator : MonoBehaviour
 
         _mesh.vertices = _vertices;
         _mesh.triangles = _triangles;
-        _mesh.uv = _uvs;
+        //_mesh.uv = _uvs;
 
         _mesh.RecalculateNormals();
+    }
+
+
+    private void SpawnObjects()
+    {
+        int count = 0;
+        int xx = _xPosition;
+        int zz = _zPosition;
+        for (int z = 0; z <= mapConfigs.height; z++)
+        {
+            for (int x = 0; x <= mapConfigs.width; x++)
+            {   
+                if(count < 5 && _heightMap[z, x] < 0.5f)
+                {
+                    Instantiate(tree, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier, zz), Quaternion.identity);
+                    count++;
+                }
+                xx++;
+            }
+            zz++;
+        }
     }
 
 }

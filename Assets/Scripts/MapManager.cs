@@ -32,11 +32,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    void SpawnObjects(int currentX, int currentZ)
-    {
-        
-    }
-
     /*
     public void ShowTextureInfos()
     {

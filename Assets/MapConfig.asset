@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cf1d665c106a84ba527de7467d09c5, type: 3}
   m_Name: MapConfig
   m_EditorClassIdentifier: 
-  width: 250
-  height: 250
+  width: 50
+  height: 50
   numberTerrains: 9
   startX: 0
   startZ: 0
