@@ -81,6 +81,31 @@ public class MapManager : MonoBehaviour
                 Destroy(terrains[0, 0].gameObject);
                 Destroy(terrains[1, 0].gameObject);
                 Destroy(terrains[2, 0].gameObject);
+
+                piecesPositions[0, 0] = piecesPositions[0, 1];
+                piecesPositions[1, 0] = piecesPositions[1, 1];
+                piecesPositions[2, 0] = piecesPositions[2, 1];
+
+                piecesPositions[0, 1] = piecesPositions[0, 2];
+                piecesPositions[1, 1] = piecesPositions[1, 2];
+                piecesPositions[2, 1] = piecesPositions[2, 2];
+
+                piecesPositions[0, 2] = new Vector2(piecesPositions[0, 1].x + mapConfigs.width, piecesPositions[0, 1].y);
+                piecesPositions[1, 2] = new Vector2(piecesPositions[1, 1].x + mapConfigs.width, piecesPositions[1, 1].y);
+                piecesPositions[2, 2] = new Vector2(piecesPositions[2, 1].x + mapConfigs.width, piecesPositions[2, 1].y);
+
+                terrains[0, 0] = terrains[0, 1];
+                terrains[1, 0] = terrains[1, 1];
+                terrains[2, 0] = terrains[2, 1];
+
+                terrains[0, 1] = terrains[0, 2];
+                terrains[1, 1] = terrains[1, 2];
+                terrains[2, 1] = terrains[2, 2];
+
+                terrains[0, 2] = Instantiate(terrainPrefab, new Vector3(piecesPositions[0, 2].x, 0, piecesPositions[0, 2].y), Quaternion.identity);
+                terrains[1, 2] = Instantiate(terrainPrefab, new Vector3(piecesPositions[1, 2].x, 0, piecesPositions[1, 2].y), Quaternion.identity);
+                terrains[2, 2] = Instantiate(terrainPrefab, new Vector3(piecesPositions[2, 2].x, 0, piecesPositions[2, 2].y), Quaternion.identity);
+
                 break;
             case Direction.Left:
                 Destroy(terrains[0, 2].gameObject);
