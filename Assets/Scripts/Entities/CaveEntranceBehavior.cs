@@ -5,13 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class CaveEntranceBehavior : MonoBehaviour
 {
-
+    public GameObject caveProvisorio;
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.transform.position = new Vector3(other.transform.position.x, other.transform.position.y + 20, other.transform.position.z);
-            Debug.Log("entrou!!!");
+            Debug.Log("Entrou na caverna!!!");
         }
     }
 }
