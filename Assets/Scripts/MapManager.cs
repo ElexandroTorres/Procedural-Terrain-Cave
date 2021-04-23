@@ -56,16 +56,13 @@ public class MapManager : MonoBehaviour
         float playerX = player.transform.position.x + mapConfigs.width;
         float playerZ = player.transform.position.z + mapConfigs.height;
 
-        Debug.Log("PosiçãoPlayer x: " + playerX.ToString());
-        Debug.Log("PosiçãoPlayr z: " + playerZ.ToString());
+        //Debug.Log("PosiçãoPlayer x: " + playerX.ToString());
+        //Debug.Log("PosiçãoPlayr z: " + playerZ.ToString());
 
         int x = Mathf.RoundToInt(playerX / mapConfigs.width) * mapConfigs.width;
         int z = Mathf.RoundToInt(playerZ / mapConfigs.height) * mapConfigs.height;
         //int x = (int)(playerX - (mapConfigs.width / 2) - mapConfigs.width);
         //int z = (int)(playerZ - (mapConfigs.height / 2) - mapConfigs.height);
-        Debug.Log("Posição x: " + x.ToString());
-        Debug.Log("Posição z: " + z.ToString());
-
 
 
         for(int i = 0; i < 3; i++)
@@ -81,6 +78,8 @@ public class MapManager : MonoBehaviour
 
         if(seg < 5)
         {
+            Debug.Log("Posição x: " + x.ToString());
+            Debug.Log("Posição z: " + z.ToString());
             Instantiate(terrainPrefab, new Vector3(x, 0, z), Quaternion.identity);
             seg++;
         }

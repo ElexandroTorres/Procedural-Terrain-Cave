@@ -144,7 +144,8 @@ public class MeshGenerator : MonoBehaviour
             {   
                 if(_heightMap[z, x] < 0.3f)
                 {
-                    Instantiate(tree, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier + 3, zz), Quaternion.identity);
+                    GameObject newTree = Instantiate(tree, new Vector3(xx, _heightMap[z, x] * mapConfigs.heightMutiplier + 3, zz), Quaternion.identity);
+                    newTree.transform.parent = this.transform;
                 }
                 distanceBetweenTrees = Random.Range(10, 20);
                 xx += distanceBetweenTrees;
