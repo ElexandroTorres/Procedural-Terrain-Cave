@@ -8,6 +8,8 @@ public class MapManager : MonoBehaviour
 
     public MeshGenerator terrainPrefab;
 
+    private TerrainPiece terrainPiece;
+
     private List<MeshGenerator> terrains;
 
     void Start()
@@ -28,6 +30,11 @@ public class MapManager : MonoBehaviour
             currentZ += mapConfigs.height;
             currentX = mapConfigs.startX - (mapConfigs.width / 2) - mapConfigs.width;
         }
+    }
+
+    void SpawnObjects(int currentX, int currentZ)
+    {
+        
     }
 
     /*

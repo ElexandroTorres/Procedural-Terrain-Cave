@@ -14,6 +14,12 @@ public class MeshGenerator : MonoBehaviour
     private float[,] _heightMap;
     private int _xPosition;
     private int _zPosition;
+
+    //testes
+    public GameObject tree;
+    public GameObject rock;
+
+    public GameObject cave;
     
     void Start()
     {
@@ -44,6 +50,9 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= mapConfigs.width; x++)
             {   
                 _vertices[current] = new Vector3(x, _heightMap[z, x] * mapConfigs.heightMutiplier, z);
+
+                if(_heightMap[z, x] <= 0.4f) 
+                    Instantiate(tree, new Vector3(x, _heightMap[z, x] * mapConfigs.heightMutiplier, z), Quaternion.identity);
  
                 current++;
             }

@@ -100,6 +100,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  tree: {fileID: 3083417926700702684, guid: 6a1fb08b1f5073b4d93931465d770e81, type: 3}
+  rock: {fileID: 4466690184967019394, guid: ec168219574afcb49bd3e29bec5675d3, type: 3}
+  cave: {fileID: 4978959018296754834, guid: e60848508bcc44a42aa0c3cf9ace8b64, type: 3}
 --- !u!64 &8293259096797387444
 MeshCollider:
   m_ObjectHideFlags: 0
