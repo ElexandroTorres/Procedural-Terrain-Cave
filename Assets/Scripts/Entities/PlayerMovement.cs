@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody _playerRb;
-    private float _playerSpeed = 5.0f;
+    public float _playerSpeed = 5.0f;
     private float _mouseSensitivy = 100.0f;
     void Start()
     {
